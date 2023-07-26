@@ -12,6 +12,7 @@ import services.EmployeeService;
  *
  */
 public class EmployeeValidator {
+
     /**
      * 従業員インスタンスの各項目についてバリデーションを行う
      * @param service 呼び出し元Serviceクラスのインスタンス
@@ -21,7 +22,7 @@ public class EmployeeValidator {
      * @return エラーのリスト
      */
     public static List<String> validate(
-            EmployeeService service, EmployeeView ev, Boolean codeDuplicateCheckFlag, Boolean passwordCheckFlag){
+            EmployeeService service, EmployeeView ev, Boolean codeDuplicateCheckFlag, Boolean passwordCheckFlag) {
         List<String> errors = new ArrayList<String>();
 
         //社員番号のチェック
@@ -43,8 +44,6 @@ public class EmployeeValidator {
         }
 
         return errors;
-
-
     }
 
     /**
@@ -74,6 +73,17 @@ public class EmployeeValidator {
 
         //エラーがない場合は空文字を返却
         return "";
+    }
+
+    /**
+     * @param service EmployeeServiceのインスタンス
+     * @param code 社員番号
+     * @return 従業員テーブルに登録されている同一社員番号のデータの件数
+     */
+    private static long isDuplicateEmployee(EmployeeService service, String code) {
+
+        long employeesCount = service.countByCode(code);
+        return employeesCount;
     }
 
     /**
